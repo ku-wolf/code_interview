@@ -1,0 +1,7 @@
+#!/bin/bash
+
+fname="test"
+ints=10000000
+
+./generate_integer_file $fname $ints
+./missing_int $fname $ints
