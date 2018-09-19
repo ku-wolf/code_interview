@@ -6,7 +6,7 @@ import unittest
 
 
 #TODO Finish
-def paths_with_sum(bst, target_sum)
+def paths_with_sum(bst, target_sum):
     paths_with_sum_acc(bst, target_sum, target_sum)
 
 def paths_with_sum_acc(bst, so_far, original_sum):
