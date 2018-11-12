@@ -25,38 +25,6 @@ try:
 except FileNotFoundError:
     pass
 
-def copy_pkg_files():
-    """Copy config and data files."""
-    from appdirs import user_data_dir, user_config_dir
-
-    pkg_dirs_to_copy = [
-        (data_src_dir, user_data_dir()),
-        (config_src_dir, user_config_dir())
-    ]
-    for d, t in pkg_dirs_to_copy:
-        t = os.path.join(t, d)
-        d = os.path.join(os.path.join(parent_dir, pkg_name), d)
-
-        if os.path.exists(d):
-            shutil.rmtree(t, ignore_errors=True)
-            shutil.copytree(d, t)
-
-            user = os.environ["SUDO_USER"]
-
-            for root, dirs, files in os.walk(t):
-                shutil.chown(root, user=user, group=user)
-                os.chmod(root, stat.S_IRWXU)
-
-                for d in dirs:
-                    d_path = os.path.join(root, d)
-                    shutil.chown(d_path, user=user, group=user)
-                    os.chmod(d_path, stat.S_IRWXU)
-
-                for f in files:
-                    f_path = os.path.join(root, f)
-                    shutil.chown(f_path, user=user, group=user)
-                    os.chmod(f_path, stat.S_IRUSR | stat.S_IWUSR)
-
 
 def reset():
     """Remove build dirs."""
@@ -70,10 +38,10 @@ def setuptools_setup():
     setup(
         name="code_interview",
         version="0.1",
-        description="default description",
-        url="default url",
-        author="default author",
-        author_email="default author",
+        description="Solutions to questions from \"Cracking the Coding Interview\" by Gayle McDowell.",
+        url="https://github.com/ku-wolf/code_interview",
+        author="Kevin Wolf",
+        author_email="kevinuwolf@gmail.com",
         license="gplv3.txt",
         packages=find_packages(),
         scripts=scripts,
@@ -90,7 +58,6 @@ def main():
         reset()
     else:
         setuptools_setup()
-        copy_pkg_files()
 
 if __name__ == "__main__":
     main()
